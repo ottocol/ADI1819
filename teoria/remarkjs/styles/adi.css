@@ -1,0 +1,83 @@
+
+.remark-slide-content h1,
+.remark-slide-content h2,
+.remark-slide-content h3 {
+  font-family: 'ChunkFive';
+  letter-spacing: 0.03em;
+  color: rgb(92,218,133);
+}
+
+.titulo h2 {
+  font-size: 2.5em;
+}
+
+.titulo h1 {
+  font-size: 3em;
+}
+
+p:has(img) {
+  background-color: red;
+}
+
+.remark-slide-content {
+  font-family: "Helvetica", sans-serif;
+  font-size: 1.6em;
+  font-weight: lighter;
+  padding: 1em 1em 1em 1em
+}
+
+
+.remark-slide-number {
+  font-size: 0.1em
+}
+
+.titulo {
+  background-color: rgb(92,218,133);
+}
+
+.titulo h1,
+.titulo h2,
+.titulo h3 {
+  color: white;
+}
+
+.remark-slide-content blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgb(234, 250, 243);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); 
+  font-size: 0.75em;
+  color: rgb(100,100,100);
+  border-radius: 15px;
+  padding: 1em;
+}
+
+
+
+
+.remark-slide-content blockquote:after{
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -1px;
+  right: auto;
+  top: auto;
+  bottom: -20px;
+  border: 22px solid;
+  border-color: transparent transparent transparent rgb(234, 250, 243);
+}
+
+.remark-slide-content blockquote p:first-child,
+.remark-slide-content blockquote p:last-child {
+  display: inline-block; }
+
+
+p .caption {
+  font-size: 0.5em;
+  text-align: center;
+}  
