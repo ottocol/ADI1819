@@ -266,14 +266,6 @@ Técnicamente posible gracias a una serie de APIs Javascript del navegador
 * AJAX "llevado al extremo"
 * La aplicación es **un único .HTML** y los cambios en la interfaz se hacen cambiando dinámicamente fragmentos de HTML gracias al JS, no navegando a otras páginas
 
----
-
-## Ejemplo de SPA en apps móviles
-
-Con un *framework* llamado [Onsen UI](https://onsen.io). Usa etiquetas propias, que una librería JS traduce a HTML aunque la mayoría de SPA usan HTML estándar.
-
-[https://onsen.io/v2/guide/index.html#getting-started](https://onsen.io/v2/guide/index.html#getting-started)
-
 
 ---
 
