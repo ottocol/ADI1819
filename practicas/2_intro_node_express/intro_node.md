@@ -49,7 +49,7 @@ La herramienta de gestión de paquetes en Node es `npm` (similar al `apt-get` de
 Comenzaremos por **instalar un paquete** para un proyecto. **En Node es habitual que las dependencias se instalen de modo local, en el propio directorio del proyecto**. Por ejemplo, vamos a instalar el paquete `colors`, para colorear la salida por la consola.
 
 ```bash
-$ npm install colors
+$ npm install colors  #o, más sencillo, "npm i colors"
 ```
 
 El comando anterior **crea un subdirectorio `node_modules` en el directorio actual**, conteniendo el código del paquete `colors` (y los paquetes de los que depende, si los hubiera).
@@ -89,19 +89,19 @@ Por ejemplo, aquí tenemos un `package.json` para nuestro `Hola Node` que incluy
 
 Los campos `name` y `version` son obligatorios. Podemos ver todos los posibles campos del `package.json` en la [documentación de referencia de npm](https://docs.npmjs.com/files/package.json).
 
-Gracias al `package.json`, si nos hubiéramos bajado este proyecto de un tercero (por ejemplo de Github) podríamos **instalar todas sus dependencias** simplemente con
+Gracias al `package.json` en los repositorios no es necesario adjuntar las librerías, solo el código propio. Cuando nos bajamos un proyecto Node de un tercero (por ejemplo de Github)  podemos **instalar todas sus dependencias** simplemente con
 
 ```bash
-$ npm install
+$ npm i 
 ```
 
 Podemos crear el esqueleto inicial del `package.json` manualmente o bien ayudándonos del comando `npm init` que nos irá solicitando los datos del proyecto de manera interactiva.
 
-Como alternativa a editar el `package.json` para indicar las dependencias, podemos hacer un `npm install`  del paquete añadiendo la opción `--save`, que modificará el `package.json` por nosotros.
+Cada vez que instalamos un paquete en nuestro proyecto con `npm i` se añade automáticamente la referencia en el `package.json`.
 
-```bash
-$ npm install colors --save
-```
+> En versiones de npm anteriores a la 5, para modificar el `package.json` al instalar un paquete había que añadir `--save` al comando de instalación, por ejemplo `npm i colors --save`
+
+Cuando queramos instalar paquetes que se usen solo en el desarrollo (por ejemplo para *testing*) podemos instalarlos con `npm i <paquete> --save-dev`. De este modo la referencia se añade al apartado `devDependencies` del `package.json`. Con un proyecto que nos hayamos bajado de otro sitio, si instalamos las dependencias con `npm i --production` no se instalarán las `devDependencies`, solo las de "producción". 
 
 ## Uso y definición de módulos
 
