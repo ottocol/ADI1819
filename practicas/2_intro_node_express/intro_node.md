@@ -4,7 +4,7 @@ Node.js (o simplemente Node) es una plataforma de desarrollo para implementar ap
 
 > En la asignatura vamos a usar Node como plataforma de servidor no por sus virtudes con respecto a otras plataformas sino básicamente por permitirnos *usar el mismo lenguaje de programación en el cliente y en el servidor: Javascript*.
 
-## Instalar Node
+## Instalar Node en Linux/OS X
 
 Hay varias formas de instalar Node en un sistema UNIX, una de las más sencillas es con `n`, un gestor de versiones de Node que nos permite tener varias versiones coexistiendo en nuestra máquina y no necesita permisos de superusuario para instalarlas.
 
@@ -54,7 +54,7 @@ $ npm install colors  #o, más sencillo, "npm i colors"
 
 El comando anterior **crea un subdirectorio `node_modules` en el directorio actual**, conteniendo el código del paquete `colors` (y los paquetes de los que depende, si los hubiera).
 
-> Nótese que si distintos proyectos en los que estamos trabajando comparten dependencias, estas estarán repetidas en cada proyecto, ya que no tenemos un repositorio centralizado local (como sí pasa por ejemplo en Maven). De este modo tenemos la ventaja de evitar problemas de versionado de dependencias (ya que cada proyecto usa directamente la versión que necesita) a costa de duplicar la información.
+> Nótese que si distintos proyectos en los que estamos trabajando comparten dependencias, estas estarán repetidas en cada proyecto, ya que no tenemos un repositorio centralizado local (como sí pasa por ejemplo en Maven). De este modo evitamos problemas de versionado de dependencias, ya que cada proyecto usa directamente la versión que necesita, pero a costa de duplicar la información.
 
 A partir de este momento ya podemos hacer uso del paquete con su correspondiente `require`. En el caso de `colors`, por ejemplo:
 
