@@ -103,7 +103,7 @@ https://api.flickr.com/services/rest/?method=flickr.test.echo&name=value
 RPC no es implícitamente inferior (ni superior) a REST
 
 - RPC puede resultar más intuitivo cuando un API se exprese mejor como un conjunto de operaciones/procesos más que de recursos
-- REST es el más popular en APIs públicos
+- REST es el más popular (actualmente) en APIs públicos
 
 ---
 
@@ -143,22 +143,45 @@ var msg = client.hello_func();
 
 ## JSON-RPC
 
-- Campos JSON estándar: `jsonrpc` (versión JSONRPC), `method` (operación), `id` (id del cliente), `params` (objeto con parámetros)
+Campos JSON estándar: `jsonrpc` (versión JSONRPC), `method` (operación), `id` (id del cliente), `params` (objeto con parámetros)
 
 - Ejemplo: el *media center* [Kodi](https://kodi.tv) lo usa para permitir el control remoto
 
-```http
+```bash
 # URL
 http://<your-ip>:<your-port>/jsonrpc
 ```
 
-```http
-# Cuerpo de la petición
-# Pausar (o play si está pausado) el reproductor número 0
-{"jsonrpc": "2.0", "method": "Player.PlayPause", "params": { "playerid": 0 }, "id": 1}
+```javascript
+// Cuerpo de la petición
+// Pausar (o play si está pausado) el reproductor número 0
+{
+ "jsonrpc": "2.0",
+ "method": "Player.PlayPause", 
+ "params": { "playerid": 0 }, 
+ "id": 1
+}
 ```
 
 <span class="caption">[http://kodi.wiki/view/JSON-RPC_API/Examples](http://kodi.wiki/view/JSON-RPC_API/Examples)</span>
+
+---
+
+## Otro ejemplo: el API Web de Slack
+
+No sigue ningún estándar RPC, como [se dice en la documentación](https://api.slack.com/web#basics) simplemente es ***"una colección de métodos HTTP al estilo RPC"***
+
+- La URL siempre es de la forma `https://slack.com/api/METHOD_FAMILY.method.`. Por ejemplo
+  + `https://slack.com/api/channels.create`
+  + `https://slack.com/api/conversations.invite`
+  + `https://slack.com/api/conversations.archive`
+- Usa únicamente GET y POST (por ejemplo borrar un mensaje se hace con POST)
+- Según la operación se admiten los parámetros en formato `application/x-www-form-urlencoded` (o sea `nombre1=valor1&nombre2=valor2...`) o bien en JSON
+
+
+Ejemplo: [documentación de cómo crear un canal](https://api.slack.com/methods/channels.create)
+
+
 
 
 ---
