@@ -227,7 +227,7 @@ Es un lenguaje para hacer consultas flexibles a **APIs orientados a recursos** e
 
 ## Esquema GraphQL
 
-Además del lenguaje de consulta hay una sintaxis para definir el **esquema** de los recursos (**consultas** posibles + **estructura** del grafo)
+Además del lenguaje de consulta hay una sintaxis para definir el **esquema** de los recursos (**estructura** del grafo + **consultas** posibles)
 
 ![](img_1d/schema.png)
 
@@ -258,6 +258,8 @@ Además del lenguaje de consulta hay una sintaxis para definir el **esquema** de
 2. Instalar dependencias con `npm install`
 3. Arrancar el servidor GraphQL con `npm run start`
 4. Abrir un navegador e ir a `http://localhost:3000`. Aparecerá [GraphiQL](https://github.com/graphql/graphiql), que es un editor interactivo y con autocompletado para lanzar consultas a APIs GraphQL
+
+También podéis probarla *online* en [https://radiant-atoll-63982.herokuapp.com/](https://radiant-atoll-63982.herokuapp.com/)
 
 ---
 
@@ -315,8 +317,8 @@ Ejemplo de mutación
 ```javascript
 mutation {
   createAuthor(_id:"Pepito", name:"Pepito Pérez", twitterHandle:"@pepito") {
-    #la mutación devuelve el autor creado, mostramos el nombre
-    #(aunque es un poco tontería porque ya lo sabíamos :))
+    # la mutación devuelve el autor creado, mostramos el nombre
+    # (aunque es un poco tontería porque ya lo sabíamos :))
     name
   }
 }
