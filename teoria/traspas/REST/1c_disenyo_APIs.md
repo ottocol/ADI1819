@@ -464,8 +464,8 @@ Existen varios lenguajes especialmente creados para **especificar APIs REST** qu
       <div class="caption">[API Blueprint](https://apiblueprint.org/)</div>
     </div>
     <div class="column third">
-      ![](img_1c/OpenAPI.png)   
-      <div class="caption">[OpenAPI (antes swagger)](https://www.openapis.org/)</div>
+      ![](img_1c/swagger.png)   
+      <div class="caption">[Swagger](https://swagger.io/)</div>
     </div>
     <div class="column third">
       ![](img_1c/raml.png)   

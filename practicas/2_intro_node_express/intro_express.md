@@ -61,7 +61,7 @@ El *routing* es el mapeo entre URLs y funciones javascript a ejecutar. Vamos a v
 
 #### Routing "simple"
 
-La forma más simple de *routing* consiste en usar la llamada del API `app.METODO(path, [callback...], callback)`, donde `app` es una instancia  de `express`, `METODO` es el método HTTP (`get`, `post`,...), `path` es la URL a mapear y `callback` es la función a ejecutar (como puede verse, podrían especificarse varias).
+La forma más simple de *routing* consiste en usar la llamada del API `app.METODO(path, [callback...], callback)`, donde `app` es una instancia  de `express`, `METODO` es el método HTTP (`get`, `post`,...), `path` es la URL a mapear y `callback` es la función a ejecutar (como ya veremos, podrían especificarse varias).
 
 ```javascript
 var express = require('express');
