@@ -141,7 +141,7 @@ curl -v -H "Content-Type: application/json" \
 
 ```http
 201 CREATED HTTP/1.1
-Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
+Location: https://api.github.com/repos/octocat/Hello-World
 ```
 
 ---
