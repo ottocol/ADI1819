@@ -181,8 +181,6 @@ Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
 
 Supongamos un recurso con subrecursos, por ejemplo los *posts* de un blog con sus comentarios. 
 
-Supongamos una lectura del recurso principal
-
 ```http
 GET http://miapificticiodeblogs.com/blogs/1/posts
 ```
