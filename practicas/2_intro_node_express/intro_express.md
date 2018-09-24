@@ -44,7 +44,7 @@ Guardar el código anterior en un archivo `hola_express.js` y crear un `package.
 Ahora podemos instalar `express` en el proyecto y actualizar además automáticamente el `package.json` con 
 
 ```bash
-npm install express --save
+npm i express # si es npm<5 tendremos que añadir "--save"
 ```
 
 Para ejecutar el ejemplo haríamos:
@@ -179,6 +179,8 @@ app.use('/usuario/:id', function(req, res, next) {
 
 En realidad en Express **los manejadores de ruta también son *middleware***. Hasta el momento, en todos los ejemplos hemos puesto manejadores con solo dos parámetros, porque en cada ruta solo ejecutábamos una operación,  pero podríamos usar también `next` para "modularizar" los manejadores.
 
+> Si definimos varios *middleware* para la misma ruta, el orden de ejecución será el mismo que el de definición en el código
+
 ### Procesamiento de la petición
 
 En aplicaciones REST vamos a necesitar la siguiente información de la petición:
@@ -194,8 +196,8 @@ En REST es habitual que el cuerpo de una petición POST/PUT sea un objeto en for
 Este *middleware* no viene incluido automáticamente con Express. Para instalarlo, desde línea de comandos:
 
 ```bash
-#recordar que con --save actualizamos el package.json
-npm install body-parser --save
+#en npm<5 habrá que añadir detrás "--save"
+npm i body-parser
 ```
 
 Ahora podemos usarlo del siguiente modo:
