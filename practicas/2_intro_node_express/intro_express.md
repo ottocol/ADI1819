@@ -1,4 +1,4 @@
-# Introducción a los APIs REST con Express
+# Introducción a Express
 
 Express es un *framework* web para Node que se caracteriza por ser bastante ligero y minimalista. No es tan sofisticado como otros *frameworks*. No obstante con las funcionalidades que ofrece nos va a bastar para implementar APIs REST:
 
