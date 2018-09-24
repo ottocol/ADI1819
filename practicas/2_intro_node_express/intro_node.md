@@ -136,8 +136,7 @@ exports.saludar = function() {
 Ahora desde otro archivo podemos usar el módulo que hemos definido:
 
 ```javascript
-//Hay una correspondencia simple entre nombre simbólico y de archivo
-// saludador -> saludador.js
-var sal = require('saludador');
+//Cuando ponemos un nombre, se añade automáticamente el ".js"
+var sal = require('./saludador');
 console.log(sal.saludar());
 ```
