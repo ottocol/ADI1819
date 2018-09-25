@@ -135,13 +135,13 @@ curl -v -H "Content-Type: application/json" \
 
 ## Crear recurso: respuesta
 
-- **Estados** posibles: **201** (Recurso creado correctamente), **401** (credenciales incorrectas), **400** (petición incorrecta, p.ej. falta un campo o su valor no es válido), **500** (Error del servidor, p.ej. se ha caído la BD)
+- **Estados** posibles: **201** (Recurso creado correctamente), **401** (sin autentificar o credenciales incorrectas), **403** (no tienes permiso para esta operación) **400** (petición incorrecta, p.ej. falta un campo o su valor no es válido), **500** (Error del servidor, p.ej. se ha caído la BD)
 
 - En caso de **201** Lo más RESTful es **devolver la URL del recurso creado** en la cabecera HTTP `Location` de la respuesta
 
 ```http
 201 CREATED HTTP/1.1
-Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
+Location: https://api.github.com/repos/octocat/Hello-World
 ```
 
 ---
@@ -153,7 +153,7 @@ Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
 - **Nuevos datos**: según la ortodoxia REST, actualizar significaría enviar TODOS los datos del recurso, incluso los que no cambian.
 - **PATCH**: cambiar solo ciertos datos. No está tan difundido como PUT al ser una adición más reciente a HTTP.
 
-- **Resultados posibles**:  **204** (Recurso modificado correctamente, no hay nada que añadir :) ), **404** (recurso no existente), Errores ya vistos con POST (**400**, **500**, **403** ...)
+- **Resultados posibles**:  **204** (Recurso modificado correctamente, no hay nada que añadir :) ), **404** (recurso no existente), Errores ya vistos con POST (**400**, **401**, **500**, ...)
 
 ---
 
@@ -163,7 +163,7 @@ Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
 -   Método **DELETE**
 -   **Resultados posibles**:
     *   204 (Recurso eliminado correctamente, nada que añadir)
-    *   Errores ya vistos (400, 403, 404, 500, ...)
+    *   Errores ya vistos (400, 401, 403, 404, 500, ...)
 
    Tras ejecutar el DELETE con éxito, las siguientes peticiones GET a la URL del recurso deberían devolver 404
 
@@ -180,8 +180,6 @@ Location: http://api.ua.es/asignaturas/ADI_3409/anuncios/1245
 ## El problema de la granularidad de los recursos
 
 Supongamos un recurso con subrecursos, por ejemplo los *posts* de un blog con sus comentarios. 
-
-Supongamos una lectura del recurso principal
 
 ```http
 GET http://miapificticiodeblogs.com/blogs/1/posts

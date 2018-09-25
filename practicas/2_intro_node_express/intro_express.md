@@ -1,4 +1,4 @@
-# Introducción a los APIs REST con Express
+# Introducción a Express
 
 Express es un *framework* web para Node que se caracteriza por ser bastante ligero y minimalista. No es tan sofisticado como otros *frameworks*. No obstante con las funcionalidades que ofrece nos va a bastar para implementar APIs REST:
 
@@ -9,7 +9,7 @@ Express es un *framework* web para Node que se caracteriza por ser bastante lige
 
 Además de esto, Express se integra con un gran número de *motores de plantillas*, para aplicaciones web "clásicas" que devuelven HTML/CSS al cliente en lugar de datos "en crudo" en JSON. Nosotros **no usaremos plantillas** de momento ya que por ahora solo implementaremos APIs, no sitios web. 
 
-### Hola Express
+## Hola Express
 
 El siguiente código sería el clásico "Hola mundo" en versión `Express`
 
@@ -44,7 +44,7 @@ Guardar el código anterior en un archivo `hola_express.js` y crear un `package.
 Ahora podemos instalar `express` en el proyecto y actualizar además automáticamente el `package.json` con 
 
 ```bash
-npm install express --save
+npm i express # si es npm<5 tendremos que añadir "--save"
 ```
 
 Para ejecutar el ejemplo haríamos:
@@ -52,6 +52,21 @@ Para ejecutar el ejemplo haríamos:
 ```bash
 node hola_express.js
 ```
+### Recargar el servidor automáticamente con `nodemon`
+
+Un problema que podemos tener al desarrollar servidores web con node es que el servidor no se reinicia automáticamente cuando cambia el `.js`. Así que con cada cambio tendríamos que parar el servidor (`Ctrl-C`) y volver a ponerlo en marcha. No obstante, hay herramientas muy que reinician el servidor cuando detectan cambios en el código JS. La más conocida es [`nodemon`](https://nodemon.io/). La forma más habitual de instalarla es hacer: 
+
+```bash
+#El -g la instala en "global" para que sea accesible desde todos los proyectos
+#También se podría instalar solo para el proyecto actual, ver documentación
+npm i -g nodemon
+```
+Y ahora hay que usar `nodemon` en lugar de `node` si queremos recarga automática de código. Por ejemplo en lugar de `node hola_express.js` haríamos
+
+```bash
+nodemon hola_express.js
+```
+
 
 ## APIs REST básicos con Express
 
@@ -179,6 +194,8 @@ app.use('/usuario/:id', function(req, res, next) {
 
 En realidad en Express **los manejadores de ruta también son *middleware***. Hasta el momento, en todos los ejemplos hemos puesto manejadores con solo dos parámetros, porque en cada ruta solo ejecutábamos una operación,  pero podríamos usar también `next` para "modularizar" los manejadores.
 
+> Si definimos varios *middleware* para la misma ruta, el orden de ejecución será el mismo que el de definición en el código
+
 ### Procesamiento de la petición
 
 En aplicaciones REST vamos a necesitar la siguiente información de la petición:
@@ -194,8 +211,8 @@ En REST es habitual que el cuerpo de una petición POST/PUT sea un objeto en for
 Este *middleware* no viene incluido automáticamente con Express. Para instalarlo, desde línea de comandos:
 
 ```bash
-#recordar que con --save actualizamos el package.json
-npm install body-parser --save
+#en npm<5 habrá que añadir detrás "--save"
+npm i body-parser
 ```
 
 Ahora podemos usarlo del siguiente modo:
