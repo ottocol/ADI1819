@@ -9,7 +9,7 @@ Express es un *framework* web para Node que se caracteriza por ser bastante lige
 
 Además de esto, Express se integra con un gran número de *motores de plantillas*, para aplicaciones web "clásicas" que devuelven HTML/CSS al cliente en lugar de datos "en crudo" en JSON. Nosotros **no usaremos plantillas** de momento ya que por ahora solo implementaremos APIs, no sitios web. 
 
-### Hola Express
+## Hola Express
 
 El siguiente código sería el clásico "Hola mundo" en versión `Express`
 
@@ -52,6 +52,21 @@ Para ejecutar el ejemplo haríamos:
 ```bash
 node hola_express.js
 ```
+### Recargar el servidor automáticamente con `nodemon`
+
+Un problema que podemos tener al desarrollar servidores web con node es que el servidor no se reinicia automáticamente cuando cambia el `.js`. Así que con cada cambio tendríamos que parar el servidor (`Ctrl-C`) y volver a ponerlo en marcha. No obstante, hay herramientas muy que reinician el servidor cuando detectan cambios en el código JS. La más conocida es [`nodemon`](https://nodemon.io/). La forma más habitual de instalarla es hacer: 
+
+```bash
+#El -g la instala en "global" para que sea accesible desde todos los proyectos
+#También se podría instalar solo para el proyecto actual, ver documentación
+npm i -g nodemon
+```
+Y ahora hay que usar `nodemon` en lugar de `node` si queremos recarga automática de código. Por ejemplo en lugar de `node hola_express.js` haríamos
+
+```bash
+nodemon hola_express.js
+```
+
 
 ## APIs REST básicos con Express
 
