@@ -1,19 +1,23 @@
 
+ body {
+   --verde_ADI : rgb(62,188,103);
+ }
+
  .reveal .slides .titulo h1,
  .reveal .slides .titulo h2 {
   color: #fff; 
 }
 
 .reveal .backgrounds .titulo {
-  background-color: rgb(92,218,133);
+  background-color: var(--verde_ADI);
 }
 
 .backgrounds .dim {
-     -webkit-filter: opacity(30%);
-     -moz-filter: opacity(30%);
-     -o-filter: opacity(30%);
-     -ms-filter: opacity(30%);
-     filter: opacity(30%);
+     -webkit-filter: opacity(15%);
+     -moz-filter: opacity(15%);
+     -o-filter: opacity(15%);
+     -ms-filter: opacity(15%);
+     filter: opacity(15%);
  }
 
 
@@ -52,7 +56,7 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color:rgb(92,218,133);
+  color:var(--verde_ADI);
   font-family: "ChunkFive", Times, serif;
   line-height: 0.9em;
   letter-spacing: 0.02em;
