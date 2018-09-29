@@ -124,7 +124,7 @@ var client = new HelloSvcClient(protocol);
 var msg = client.hello_func();
 ```
 
-<span class="caption">[Ejemplo de cliente Thrift desde el navegador](https://github.com/apache/thrift/blob/master/lib/nodejs/examples/hello.html)</span>
+<span class="caption">[HMTML completo (ejemplo de cliente Thrift desde el navegador)](https://github.com/apache/thrift/blob/master/lib/nodejs/examples/hello.html)</span>
 
 ---
 
@@ -171,7 +171,7 @@ http://<your-ip>:<your-port>/jsonrpc
 
 No sigue ningún estándar RPC, como [se dice en la documentación](https://api.slack.com/web#basics) simplemente es ***"una colección de métodos HTTP al estilo RPC"***
 
-- La URL siempre es de la forma `https://slack.com/api/METHOD_FAMILY.method.`. Por ejemplo
+- La URL siempre es de la forma `https://slack.com/api/METHOD_FAMILY.method`. Por ejemplo
   + `https://slack.com/api/channels.create`
   + `https://slack.com/api/conversations.invite`
   + `https://slack.com/api/conversations.archive`
@@ -231,6 +231,9 @@ Además del lenguaje de consulta hay una sintaxis para definir el **esquema** de
 
 ![](img_1d/schema.png)
 
+<!-- .element class="caption" -->Esta sintaxis es "abstracta". La sintaxis real dependerá del lenguaje que estemos usando para implementar el servidor GraphQL
+
+
 ---
 
 ## Evolución de GraphQL
@@ -244,7 +247,7 @@ Además del lenguaje de consulta hay una sintaxis para definir el **esquema** de
 
 ## Ejemplo sencillo
 
-- Tomado de [https://github.com/kadirahq/graphql-blog-schema](https://github.com/kadirahq/graphql-blog-schema)
+- Tomado de [https://github.com/kadirahq/graphql-blog-schema](https://github.com/kadirahq/graphql-blog-schema). Un API para gestionar un blog, sin BD, con datos en memoria para simplificar.
 
 - [Esquema](https://github.com/kadirahq/graphql-blog-schema/blob/master/src/schema.js)
   * Recursos: `Post`, `Category`, `Author`, `Comment` 
@@ -265,15 +268,19 @@ También podéis probarla *online* en [https://radiant-atoll-63982.herokuapp.com
 
 Podéis probar estas consultas, u otras similares:
 
+Podemos obtener los campos que queramos, del objeto sobre el que hacemos la *query* o de los relacionados
+
 ```javascript
 query {
   latestPost {
+    title
     author {
       name
     }
   }
 }
 ```
+Las *queries* pueden tener parámetros
 
 ```javascript
 query {
@@ -286,7 +293,22 @@ query {
 
 ---
 
-En el *[schema](https://github.com/kadirahq/graphql-blog-schema/blob/master/src/schema.js)* se define la interfaz con el API: las **queries** (consultas, peticiones de tipo READ) y las **mutaciones** (modificaciones, peticiones de tipo CREATE/UPDATE/DELETE)
+Ejemplo de mutación
+
+```javascript
+mutation {
+  createAuthor(_id:"Pepito", name:"Pepito Pérez", twitterHandle:"@pepito") {
+    # la mutación devuelve el autor creado, mostramos el nombre
+    # (aunque es un poco tontería porque ya lo sabíamos :))
+    name
+  }
+```
+
+---
+
+## El *schema*
+
+Define la interfaz con el API: las **queries** (consultas), las **mutaciones** (modificaciones) y la **estructura de los datos**.
 
 ```javascript
 const Schema = new GraphQLSchema({
@@ -294,6 +316,7 @@ const Schema = new GraphQLSchema({
   mutation: Mutation
 });
 
+//aqui se definen las queries posibles y también la estructura
 const Query = new GraphQLObjectType({
   name: 'BlogSchema',
   description: 'Root of the Blog Schema',
@@ -309,43 +332,72 @@ const Query = new GraphQLObjectType({
   ...
 })
 ```
+<!-- .element class="caption" -->[Código completo](https://github.com/kadirahq/graphql-blog-schema/blob/master/src/schema.js)
 
 ---
 
-Ejemplo de mutación
+## El *schema*
+
+Define también la estructura de los datos
 
 ```javascript
-mutation {
-  createAuthor(_id:"Pepito", name:"Pepito Pérez", twitterHandle:"@pepito") {
-    # la mutación devuelve el autor creado, mostramos el nombre
-    # (aunque es un poco tontería porque ya lo sabíamos :))
-    name
-  }
-}
+const Author = new GraphQLObjectType({
+  name: 'Author',
+  description: 'Represent the type of an author of a blog post or a comment',
+  fields: () => ({
+    _id: {type: GraphQLString},
+    name: {type: GraphQLString},
+    twitterHandle: {type: GraphQLString}
+  })
+});
 ```
 
 
+---
+
+La *magia*, o el **"enganche" entre GraphQL y los datos reales** (típicamente en una BD, pero aquí simplemente en variables en memoria) se hace en la función **`resolve()`**
+
+```javascript
+latestPost: {
+  type: Post,
+  description: 'Latest post in the blog',
+  resolve: function() {
+    PostsList.sort((a, b) => {
+      var bTime = new Date(b.date['$date']).getTime();
+      var aTime = new Date(a.date['$date']).getTime();
+
+      return bTime - aTime;
+    });
+
+    return PostsList[0];
+  }
+},
+```
 
 ---
 
 <!-- .slide: class="dim" -->
 <!-- .slide: data-background-image="img_1d/minions.jpg" -->
 <!-- .slide: style="color: white; text-shadow: 1px 1px 3px black" -->
-## Demo con el nuevo API GraphQL de Github
+## Demo con el API GraphQL de Github
 
-[https://developer.github.com/v4/explorer/]([https://developer.github.com/v4/explorer/])
+- [Prueba]([https://developer.github.com/v4/explorer/]) (hace falta *loguearse* en Github)
+
+- [Documentación](https://developer.github.com/v4/)
+
+- [Otros APIs GraphQL de acceso público](https://github.com/apis-guru/graphql-apis)
 
 ---
 
 ## Más sobre GraphQL
 
-- Nótese que en un API REST hay una URL por recurso, aquí todas las peticiones van a la misma URL
+- En un API REST hay una URL por recurso, aquí **todas las peticiones van a la misma URL**
 
 ```http
 http://miservidorgraphql/api?query={...}
 ```
 
-- Para los errores no se usa el código de estado HTTP, sino campos en el JSON de la respuesta
+- Para los **errores no se usa el código de estado HTTP**, sino campos en el JSON de la respuesta
 
 ```javascript
 #query incorrecta, ya que el campo "titulo" no existe
@@ -367,7 +419,7 @@ query {
 
 ---
 
-GraphQL es una tecnología prometedora, pero como todas las nuevas tecnologías tiene un tiempo de vida incierto
+GraphQL es una tecnología prometedora, pero como todas las nuevas tecnologías tiene un tiempo de vida incierto. **Tampoco hace falta matar ya a REST**
 
 <iframe width="640" height="360" data-src="https://www.youtube.com/embed/cUIhcgtMvGc" frameborder="0" allowfullscreen></iframe>"</iframe>
 
@@ -481,6 +533,13 @@ Ambos son orientados a envío de mensajes
   * Bidireccionales, tanto cliente como servidor pueden enviar mensajes
   * Mensajes de texto o binarios
   * Usa un protocolo propio   
+
+
+---
+
+## Ejemplo de websockets
+
+https://khaledsaikat.com/chat-application-with-websockets-and-node-js/
 
 
 ---
