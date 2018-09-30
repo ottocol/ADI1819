@@ -423,41 +423,161 @@ GraphQL es una tecnología prometedora, pero como todas las nuevas tecnologías 
 
 <iframe width="640" height="360" data-src="https://www.youtube.com/embed/cUIhcgtMvGc" frameborder="0" allowfullscreen></iframe>"</iframe>
 
-<!-- .element: class="caption" --> [Por qué API REST está muerto y debemos usar APIs GraphQL - José María Rodríguez](https://youtu.be/cUIhcgtMvGc)
+<!-- .element: class="caption" --> [Por qué API REST está muerto y debemos usar APIs GraphQL - José María Rodríguez](https://youtu.be/cUIhcgtMvGc) (Independientemente de lo tremendista del título, una charla interesante para ilustrar cómo funciona GraphQL y diferencias con REST)
 
 ---
 
 <!-- .slide: class="titulo" -->
 
-# 3. APIs en tiempo real
+# 3. APIs basados en eventos
 
 ---
 
-## APIs "en tiempo real"
 
 - En ciertos casos queremos estar al tanto de las **actualizaciones del servidor** (p. ej. un *juego online*, un *chat*, ver los *tweets* de nuestro *timeline*, ...)
-- El cliente puede hacer ***polling* periódicamente, pero es ineficiente**, es mejor que el servidor "nos avise" de que hay nuevos datos, pero...¿cómo?
+- El cliente puede hacer ***polling* periódicamente, pero es ineficiente**, es mejor **que el servidor "nos avise"** de que hay nuevos datos
 
 
 ---
 
-## Algunas tecnologías web para tiempo real
+## Petición/respuesta vs. eventos
+
+
+<!-- .element class="caption" -->De [https://realtimeapi.io/hub/event-driven-apis/](https://realtimeapi.io/hub/event-driven-apis/)
+![ddd](https://dzone.com/storage/temp/6520586-pushpin.jpg)
+
+
+---
+
+## Algunas tecnologías web para tiempo real/eventos
+
+**Servidor-Cliente(Navegador)**
 
 - **Long polling**: el cliente hace *polling* pero la conexión se mantiene abierta hasta que el servidor envía datos. Entonces hay que hacer *polling* de nuevo
-- **Webhooks**: el servidor nos avisa con una petición HTTP cuando hay nuevos datos
-- **Server Sent Events**: API orientado a que el cliente pueda recibir eventos del servidor
-- **Websockets**: comunicación bidireccional basada en eventos
+- **Server Sent Events**: el cliente recibe de forma asíncrona mensajes y eventos del servidor
+- **Websockets**: comunicación bidireccional asíncrona basada en eventos
 
-Las tres primeras van sobre HTTTP, pero websockets usa un protocolo propio
+**Servidor-Servidor**
+
+- **Webhooks**: se avisa con una petición HTTP cuando hay nuevos datos (no sigue exactamente el esquema de la transparencia anterior)
+
+
+---
+
+
+## Polling vs Long polling vs. SSE
+
+<!-- .element class="caption" --> De [Polling vs SSE vs WebSocket— How to choose the right one](https://codeburst.io/polling-vs-sse-vs-websocket-how-to-choose-the-right-one-1859e4e13bd9)
+![](https://cdn-images-1.medium.com/max/800/1*zG7Jyeq02JRAN6Wz6gs15g.png)
+
+---
+
+## Server Sent Events
+
+
+ + **Unidireccionales**, siempre desde el servidor al cliente
+ + Mensajes de **texto**
+ + Funciona sobre **HTTP**
+ + El API [no está soportado](https://caniuse.com/#feat=eventsource) en **Explorer/Edge**, Opera
+
+---
+
+## Ejemplo de SSE
+
+<!-- .element  class="caption"--> Ejemplo completo en [https://glitch.com/edit/#!/peridot-coin](https://glitch.com/edit/#!/peridot-coin)
+
+```javascript
+//Servidor
+app.get('/sse', function(pet, resp) {
+  //El servidor de eventos debe usar el tipo MIME text/event-stream
+  resp.header('Content-Type', 'text/event-stream')
+  //Temporizador cada dos segundos
+  setInterval(function() {
+     //nombre del evento
+     resp.write('event: ping\n')
+     //datos del evento (texto, en nuestro caso un JSON)
+     resp.write(`data: {"timestamp":"${new Date()}"}`)
+     //Hay que acabar el mensaje con 2 retornos de carro
+     resp.write('\n\n')
+  }, 2000)
+})
+
+```
+
+```javascript
+//Cliente
+var evtSource = new EventSource("/sse");
+evtSource.addEventListener('ping', function(evento) {
+   var datos = JSON.parse(evento.data)
+   console.log(datos.timestamp)
+})
+```
+
+---
+
+Facebook ofrece algunos *endpoints* SSE en su "graph API"
+
+[https://developers.facebook.com/docs/graph-api/server-sent-events](https://developers.facebook.com/docs/graph-api/server-sent-events)
+
+![](img_1d/sse_facebook.png)
+
+
+---
+
+## Websockets
+
+
++ **Bidireccionales**, tanto cliente como servidor pueden enviar mensajes
++ Los mensajes pueden contener **texto** o datos **binarios**
++ Usa un **protocolo propio** (no es HTTP). Podemos tener problemas para pasar algunos *firewalls* 
+
+---
+
+## Ejemplo de websockets
+
+<!-- .element  class="caption"--> Ejemplo completo en [https://glitch.com/edit/#!/sugar-property](https://glitch.com/edit/#!/sugar-property)
+
+```javascript
+//SERVIDOR
+var express = require('express');
+var app = express();
+app.use(express.static('public'));
+var expressWs = require('express-ws')(app);
+
+app.ws('/', function(ws, pet) {
+  ws.on('message', function(data){
+        console.log("Mensaje del cliente: " + data)
+  })
+  
+  setInterval(
+    () => ws.send(new Date().toLocaleTimeString()),
+    2000
+  )
+}))
+```
+
+```javascript
+//CLIENTE
+var ws = new WebSocket('wss://' + window.location.hostname)
+      
+ws.onmessage = function(evento) {
+ console.log("El servidor dice: " + evento.data)
+}   
+
+document.getElementById('botonMensaje').addEventListener('click', function() {
+  ws.send(document.getElementById('mensaje').value)  
+})
+```
 
 ---
 
 ## Webhooks
 
+- Cuando nuestro servidor accede a un servicio de un tercero y queremos que ese tercero nos avise de actualizaciones
 - Unir/modificar ideas que ya conocéis de otras asignaturas
    - "Patrón de diseño" **publicar/suscribir** 
    - ***Callbacks***
-- Cuando hay algún evento importante, el servidor del API lanza una petición POST a una URL de nuestro servidor (*callback*)
+- Cuando hay algún evento importante, el servidor del Webhook lanza una petición POST a una URL de nuestro servidor (*callback*)
 
 ---
 
@@ -491,7 +611,7 @@ Las tres primeras van sobre HTTTP, pero websockets usa un protocolo propio
 
 ---
 
-1. Necesitamos un servidor que pueda recibir peticiones del exterior. Podemos usar [RequestBin](https://requestb.in/) para obtener una URL pública a la que hacer peticiones
+1. Necesitamos un servidor que pueda recibir peticiones del exterior. Podemos usar p.ej. [Beeceptor](https://beeceptor.com/) para obtener una URL pública *temporal* a la que hacer peticiones
 2. En el API REST de github, dada la URL de un repo, sus *webhooks* están en `hooks` (`https://api.github.com/repos/:nombre_usuario/:nombre_repo/hooks`. Como queremos *crear* uno nuevo, hay que enviar un POST con datos JSON, por ejemplo
 
 ```javascript
@@ -512,71 +632,14 @@ Las tres primeras van sobre HTTTP, pero websockets usa un protocolo propio
 
 ---
 
-## Limitaciones de los webhooks
+## Limitación importante de los webhooks
 
-El suscriptor al *webhook* debe poder responder a peticiones HTTP. No nos vale por ejemplo para avisar a nuestra app cliente en el navegador
+El suscriptor al *webhook* debe poder responder a peticiones HTTP. **No nos vale** por ejemplo para avisar a nuestra app cliente **en el navegador**
 
 ![](https://media.giphy.com/media/rvDtLCABDMaqY/giphy.gif)
 
----
-
-## Server Sent Events vs. Websockets
-
-Ambos son orientados a envío de mensajes
-
-- **SSE**:
-   * Unidireccionales, siempre desde el servidor al cliente
-   * Envían mensajes de texto
-   * Usa HTTP
-
-- **Websockets**
-  * Bidireccionales, tanto cliente como servidor pueden enviar mensajes
-  * Mensajes de texto o binarios
-  * Usa un protocolo propio   
 
 
----
-
-## Ejemplo de websockets
-
-https://khaledsaikat.com/chat-application-with-websockets-and-node-js/
-
-
----
-
-## Ejemplo de websockets
-
-El API es muy sencillo de usar
-
-```javascript
-var WebSocket = require('ws')
-var wss = new WebSocket.Server({server: httpServer})
-
-wss.on('connection', function(ws, pet) {
-    ws.on('message', function(data){
-        console.log("Mensaje del cliente: " + data)
-    })
-    ws.send("hola, soy el servidor, gracias por conectarte")
-}))
-```
-<!-- .element: class="caption"-->Servidor
-
-```javascript
-var ws = new WebSocket('ws://localhost:3000')
-ws.onmessage = function(evento) {
-  console.log(evento.data)
-  ws.send("Hola, pues yo soy tu cliente")
-} 
-```
-<!-- .element: class="caption"-->Cliente
-
-
----
-
-## Limitaciones adicionales
-
-- **SSE** no está soportado en Explorer/Edge
-- Al ser un protocolo distinto de HTTP, **websockets** puede no funcionar bien si hay *proxies* de por medio o en algunas redes móviles
 
 ---
 
