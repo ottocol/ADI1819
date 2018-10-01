@@ -381,7 +381,7 @@ latestPost: {
 <!-- .slide: style="color: white; text-shadow: 1px 1px 3px black" -->
 ## Demo con el API GraphQL de Github
 
-- [Prueba]([https://developer.github.com/v4/explorer/]) (hace falta *loguearse* en Github)
+- [Prueba](https://developer.github.com/v4/explorer/) (hace falta *loguearse* en Github)
 
 - [Documentación](https://developer.github.com/v4/)
 
