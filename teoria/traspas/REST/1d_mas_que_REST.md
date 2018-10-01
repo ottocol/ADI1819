@@ -623,12 +623,13 @@ document.getElementById('botonMensaje').addEventListener('click', function() {
     "pull_request"
   ],
   "config": {
-    "url": URL pública que nos ha dado RequestBin,
+    "url": URL pública a la que Github hará POST,
     "content_type": "json"
   }
 }
 
 ```
+Esqueleto de script CURL+JSON en [https://repl.it/repls/NervousForestgreenComputationallinguistics](https://repl.it/repls/NervousForestgreenComputationallinguistics)
 
 ---
 
