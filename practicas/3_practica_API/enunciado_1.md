@@ -42,7 +42,7 @@ Además de la documentación anterior, como mínimo todas las prácticas deben c
 
 Se deben implementar al menos 7 llamadas distintas al API (más la de autentificación, o *login*, que se describe en el apartado siguiente). Debe haber al menos dos casos de GET (1 de lectura de un recurso sabiendo su `id` y 1 de lectura de una colección), y al menos un caso de POST, PUT y DELETE. Esto nos da 5 llamadas. Las dos restantes pueden ser del tipo que queráis.  
 
-Se debe realizar *testing* de todas las llamadas al API. Se propone usar Mocha y supertest, pero en su lugar podéis usar las herramientas que deseéis.
+Se debe realizar *testing* de todas las llamadas al API. Se propone usar Mocha y supertest, pero en su lugar podéis usar las herramientas que deseéis, por ejemplo con [Postman](https://www.getpostman.com/) se pueden [hacer *scripts* para *tests*](https://www.getpostman.com/docs/v6/postman/scripts/test_scripts) con un código JS muy sencillo
 
 ### Autentificación
 
