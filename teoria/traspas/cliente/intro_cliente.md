@@ -512,7 +512,7 @@ var plantilla = `
 console.log(plantilla)
 ```
 
-Problema: no son reusables, no puedo reutilizar la misma plantilla con otros valores de las variables
+Problema: no se puede reutilizar la misma plantilla con otros valores de las variables. [Podríamos arreglarlo](http://www.zsoltnagy.eu/how-replacing-javascript-templating-engines-with-es6-template-literals-may-cost-you-your-job/) pero seguramente estaríamos reinventando la rueda
 
 
 
