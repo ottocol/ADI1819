@@ -367,25 +367,6 @@ var camposTexto = document.querySelectorAll('input[type="text"]');
 var filasPares = document. querySelectorAll("tr:nth-child(2n)")
 ```
 
-
----
-
-## jQuery
-
-La *librería* que popularizó la idea de seleccionar nodos con sintaxis de selectores CSS
-
-```javascript
-//Podéis probar esto en cualquier web que use jQuery (p.ej. la UA)
-//desde la consola del desarrollador
-$('img')                 //Muy similar a document.querySelectorAll('img')
-  .fadeOut(2000)         //Hacer transparente de modo gradual en 2 s.
-  .addClass('miImagen')  //Añadir una clase CSS
-```
-
-- Se trabaja **implícitamente con todos los resultados** devueltos por `$` sin tener que recorrer explícitamente un array de resultados
-- Se pueden **encadenar** operaciones 
-- Además de ser un **API más sencillo** que el estándar podemos usar **el mismo API** en cualquier navegador. jQuery se ocupa de gestionar las incompatibilidades 
-
 ---
 
 ## Modificar/crear nodos
