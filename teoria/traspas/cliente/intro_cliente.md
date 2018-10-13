@@ -82,7 +82,7 @@ Forma "clásica": con el atributo `src` en un `<script>` vacío conseguimos una 
         });
 </script>
 ```
-Cuantas más dependencias externas tenemos, esta forma se vuelve más tediosa (por la cantidad de `script src`) y problemática (por gestionar manualmente el orden de las dependencias)
+Cuantas más dependencias externas tenemos, esta forma se vuelve más tediosa (por la cantidad de `script src`) y problemática (por tener que gestionar manualmente el orden de las dependencias, si hay relaciones entre ellas)
 
 ---
 
@@ -158,7 +158,7 @@ HTML:
   * *minificar* el código
   * copiar los *assets* (jpg, png, ...)
   * ...
-- Ejemplos: webpack, parcel, browserify, rollup, jspm, ...
+- Ejemplos: webpack, parcel, rollup, browserify, jspm, ...
 
 
 ---
@@ -237,6 +237,38 @@ document.addEventListener('DOMContentLoaded', function() {
   alert("Ahora ya puedo marearte con este bonito anuncio")
 })
 ```
+
+---
+
+## Delegación de eventos
+
+Los eventos sobre un nodo del DOM *suben*  hacia arriba en la jerarquía de nodos (*bubbling up*), de modo que podemos capturarlos también en niveles superiores.
+
+<!-- .element class="caption" -->[https://jsbin.com/buvoyif/edit?html,js,console,output](https://jsbin.com/buvoyif/edit?html,js,console,output)
+
+```html
+<body>
+  <button id="boton">Pulsa aquí</button>
+  <p>Hola, aquí también puedes pulsar</p>
+</body> 
+```
+```javascript
+document.getElementById('boton').addEventListener('click', function(e) {
+  console.log('en el listerner del botón')
+  //si ponemos esto, paramos el bubbling
+  //e.stopPropagation()
+})
+
+//Aquí recibiríamos también los clicks sobre el <button> y el <p>
+document.addEventListener('click', function(e){
+  //En un listener, this es el objeto al que está vinculado el evento.
+  //En este caso, document
+  console.log("this es " + this.nodeName) //document
+  //target es el "objetivo" del evento. P.ej. si clicamos en el boton será este
+  console.log('click sobre ' + e.target.nodeName)
+})
+```
+
 
 ---
 
