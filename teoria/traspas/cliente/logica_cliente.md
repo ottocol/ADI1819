@@ -420,6 +420,13 @@ async function mostrarChiste() {
 
 ---
 
+[https://async-await.xyz/](https://async-await.xyz/)
+
+Una curiosa animación que compara gráficamente los *callbacks* con las promesas y `async/await`
+
+
+---
+
 ## Peticiones más complejas con `fetch`
 
 Por defecto se hace una petición `GET`. Para cambiar el tipo de petición, añadir cabeceras, cuerpo de petición, etc, podemos pasar un segundo parámetro que es un objeto JS con las propiedades:
