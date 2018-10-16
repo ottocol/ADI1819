@@ -33,6 +33,11 @@
 - Típicamente se crean a petición del servidor
 - Las **almacena el cliente** pero se las envía al servidor en cada petición
 
+---
+
+
+![](img_1e/cookie_sesion.png)
+
 
 ---
 
@@ -40,11 +45,6 @@
 
 - Casi todos los _frameworks_ de programación del servidor pueden generar automáticamente **cookies con valores pseudoaleatorios** lo bastante largas para ser usadas como "id de sesión" con cierta seguridad (==difícil generar maliciosamente una que coincida con una sesión activa)
 - Esto permite **almacenar datos en el servidor** exclusivos de cada usuario. El "id de sesión" sirve como "clave" para recuperar los datos
-
----
-
-
-![](img_1e/cookie_sesion.png)
 
 ---
 
@@ -273,7 +273,7 @@ Similar a las *cookies* ya que estamos enviando un identificador del cliente en 
 ## JSON Web Token (JWT)
 
 *   [Estándar IETF](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html). Hay implementación en multitud de lenguajes.
-*   Es una cadena formada por 3 partes:
+*   Es una cadena en formato JSON formada por 3 partes:
     1.  **Cabecera**: indica el tipo de token y el algoritmo de firma. Se codifica en Base64\. Ejemplo: `{"typ"=>"JWT", "alg"=>"HS256"}` (indica que esto es un "JWT" y se firmará con HMAC SHA-256)
     2.  **Payload**: lo que queremos almacenar en el token en formato JSON (p.ej. `{"login"=>"adi"}`) y codificado en Base64URL
     3.  **Firma**: se aplica un algoritmo de _hash_ sobre la cabecera, el payload y una clave secreta que solo conoce el servidor y se pasa a Base64URL
