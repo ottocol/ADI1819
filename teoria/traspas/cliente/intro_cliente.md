@@ -605,26 +605,31 @@ document.getElementById('miBlog').innerHTML = resultado
 
 ---
 
-Muchos *frameworks* tienen formatos de plantillas propios. Por ejemplo en Angular 1 se usa interpolación con `{{}}` y atributos propios en HTML (*directivas*) para por ejemplo iterar por listas
+Muchos *frameworks* tienen formatos de plantillas propios. Por ejemplo en Angular o Vue se usa interpolación con sintaxis Mustache `{{}}` y atributos HTML propios (*directivas*) para iterar por listas, hacer *rendering* condicional,...
+
+[https://jsbin.com/jozijah/edit?html,js,output](https://jsbin.com/jozijah/edit?html,js,output)<!-- .element class="caption" -->
 
 ```html
-<!-- de https://docs.angularjs.org/tutorial/step_10 -->
-...
-<h1>{{$ctrl.phone.name}}</h1>
-<p>{{$ctrl.phone.description}}</p>
-<ul class="phone-thumbs">
-  <li ng-repeat="img in $ctrl.phone.images">
-    <img ng-src="{{img}}" />
-  </li>
-</ul>
-<ul class="specs">
-  <li>
-    <span>Availability and Networks</span>
-    <dl>
-      <dt>Availability</dt>
-      <dd ng-repeat="availability in $ctrl.phone.availability">{{availability}}</dd>
-    </dl>
-  </li>
-  ...
+<!-- adaptado de la documentación de Vue -->
+<div id="example">
+  <ul v-if="items.length">
+    <li v-for="item in items">
+      {{ item.message }}
+    </li>
+  </ul>
+  <p v-else>No hay items</p>
+</div>  
+```
+
+```js
+var example1 = new Vue({
+  el: '#example',
+  data: {
+    items: [
+      { message: 'Uno' },
+      { message: 'Dos' }
+    ]
+  }
+})
 ```
 
