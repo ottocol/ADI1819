@@ -473,12 +473,13 @@ La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar 
 - En algunos podemos **vincular**  elementos HTML con propiedades del modelo, y se **actualizarán automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue...
 - En otros **repintamos el HTML entero** y el *framework* modifica solo las partes que cambian. Por ejemplo, React.
 
-[https://jsbin.com/pabujij/edit?html,js,console,output](https://jsbin.com/pabujij/edit?html,js,console,output) <!-- .element: class="caption" -->
+[https://jsbin.com/qikaxef/edit?html,js,console,output](https://jsbin.com/qikaxef/edit?html,js,console,output) <!-- .element: class="caption" -->
 
 ```html
 <div id="app">
-  {{mensaje}}
-</div>  
+  <input type="text" v-model="mensaje"><br>
+  <h1>{{mensaje}}<h1>
+</div>    
 ```
  
 ```javascript
