@@ -254,7 +254,7 @@ Los eventos sobre un nodo del DOM *suben*  hacia arriba en la jerarquía de nodo
 ```
 ```javascript
 document.getElementById('boton').addEventListener('click', function(e) {
-  console.log('en el listerner del botón')
+  console.log('en el listener del botón')
   //si ponemos esto, paramos el bubbling
   //e.stopPropagation()
 })
@@ -470,8 +470,8 @@ document.getElementById("boton").addEventListener('click', function() {
 
 La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar el DOM directamente
 
-- En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Ember,...
-- En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Ejemplos: React, Vue, ...
+- En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue...
+- En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Por ejemplo, React ...
  
 
 ---
