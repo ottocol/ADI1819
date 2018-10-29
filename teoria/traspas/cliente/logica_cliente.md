@@ -90,7 +90,7 @@ function setTimeout(fn,delay) {
   fn();
 }
 
-//esto es lo mismo que
+//esto conceptualmente lo mismo, así que también dará error
 fn = p.saludar
 fn()
 ```
@@ -156,7 +156,7 @@ class Contador {
 }
 ```
 
-Mismo problema con el `this`, pero aquí podemos resolverlo además de con `bind`de forma distinta
+Mismo problema con el `this`, pero aquí podemos resolverlo de una forma alternativa a `bind`
 
 
 ---
@@ -175,7 +175,6 @@ class Contador {
         this.valor++
         this.mostrar()
     }, 1000)
-    
   }
   mostrar() {
     this.nodo_DOM.innerHTML = this.valor
@@ -183,7 +182,7 @@ class Contador {
 }
 ```
 
-Las funciones de "flecha gorda" (*fat arrow*) tienen *vinculación léxica del `this`*. Es decir, el significado de `this` viene dado por el contexto donde se **define** la función y no por donde se **ejecuta**.
+Las funciones de "flecha gorda" (*fat arrow*) tienen *vinculación léxica del `this`*. Es decir, el significado de `this` viene dado por el **contexto donde se define la función** y no por donde se ejecuta.
 
 
 ---
@@ -209,9 +208,23 @@ Necesitamos sincronizar los modelos guardados en el navegador con el servidor, e
 
 Es una combinación de tecnologías:
 
-- **APIs `fetch`** y **`XMLHttpRequest`**: para **hacer peticiones HTTP al servidor** con Javascript y recibir la respuesta sin cambiar de página
+- **API `fetch`** para **hacer peticiones HTTP al servidor** con Javascript y recibir la respuesta sin cambiar de página
 - ***XML***: al comienzo era el formato de intercambio de datos cliente/servidor. Hoy en día JSON.
 - **API DOM**: actualizar **solo parte de la página** con los datos del servivor
+
+---
+
+## Formato de datos en AJAX
+
+Originalmente se usaba XML para intercambiar datos, pero es tedioso de *parsear* con JS (hay que usar el API DOM), mientras que convertir una cadena de texto JSON a objeto JS es trivial con el API estándar
+
+```javascript
+//Si esto fuera AJAX de verdad, este texto vendría en la respuesta del servidor
+var texto = '{"login":"pepe", "nombre": "Pepe Pérez"}'
+var objeto = JSON.parse(texto)
+console.log(objeto.login) //pepe
+```
+
 
 ---
 
@@ -225,31 +238,13 @@ fetch('https://api.github.com/users/octocat')
 console.log('Cuando se ejecuta esto todavía no se ha recibido la respuesta!!')
 ```
 
-Luego veremos cómo recibir el resultado asíncrono
-
----
-
-## Formato de datos en AJAX
-
-Originalmente se usaba XML para intercambiar datos, pero es tedioso de *parsear* desde JS (hay que usar el API DOM), mientras que convertir una cadena de texto JSON a objeto JS es trivial con el API estándar
-
-```javascript
-//Si esto fuera AJAX de verdad, este texto vendría en la respuesta del servidor
-var texto = '{"login":"pepe", "nombre": "Pepe Pérez"}'
-var objeto = JSON.parse(texto)
-console.log(objeto.login) //pepe
-```
+Ahora veremos cómo recibir el resultado asíncrono
 
 ---
 
 ## `fetch` API
 
-El API recomendado actualmente para hacer peticiones AJAX. Prácticamente todos los navegadores actuales [lo implementan](http://caniuse.com/#search=fetch). Si no, se puede usar un [*polyfill*](https://github.com/github/fetch)
-
-Buenas intros al API: 
-
-- [https://davidwalsh.name/fetch](https://davidwalsh.name/fetch) (básica)
-- [https://developers.google.com/web/updates/2015/03/introduction-to-fetch](https://developers.google.com/web/updates/2015/03/introduction-to-fetch)(detallada) 
+El API recomendado actualmente para hacer peticiones AJAX. Prácticamente todos los navegadores actuales [lo implementan](http://caniuse.com/#search=fetch). 
 
 ```javascript
 fetch('https://api.github.com/users/octocat')
@@ -263,6 +258,11 @@ fetch('https://api.github.com/users/octocat')
       console.log(error)
   })
 ```
+Buenas intros al API: 
+
+- [https://davidwalsh.name/fetch](https://davidwalsh.name/fetch) (básica)
+- [https://developers.google.com/web/updates/2015/03/introduction-to-fetch](https://developers.google.com/web/updates/2015/03/introduction-to-fetch)(detallada) 
+
 
 ---
 
