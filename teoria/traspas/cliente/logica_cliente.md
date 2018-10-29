@@ -418,17 +418,9 @@ Escribir código asíncrono como si fuera secuencial
 
 ```javascript
 //Versión completa en https://codepen.io/ottocol/pen/Bmymvg?editors=1010#0
-function obtenerChiste() {
-  return fetch("https://api.icndb.com/jokes/random")
-}
-
-function parsearJSON(respuesta) {
-  return respuesta.json()
-}
-
 async function mostrarChiste() {
-  var resp = await obtenerChiste()
-  var json = await parsearJSON(resp)
+  var resp = await fetch("https://api.icndb.com/jokes/random")
+  var json = await resp.json()
   var texto = json.value.joke
   console.log(texto)
 }
