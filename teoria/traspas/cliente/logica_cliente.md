@@ -310,64 +310,43 @@ document.getElementById('miBoton').addEventListener('click', function(){
 - Una **promesa** (`Promise`) es un objeto que representa el resultado de una operación asíncrona. Puede estar en estado pendiente (*pending*), resuelta con éxito (*resolved*) o haber fallado (*rejected*)
 - `then()` y `catch()` son métodos de la clase `Promise`.
   -  A `then` le podemos pasar dos funciones, que se ejecutarán cuando la promesa pase a *resolved* y a *rejected* respectivamente. La segunda es opcional, de hecho habitualmente solo se le pasa la primera.
-  -  A `catch` le podemos pasar una función que se ejecutará cuando la promesa pase a *rejected*
+  -  A `catch` le podemos pasar una función que se ejecutará cuando la promesa pase a *rejected*. En realidad es "azúcar sintáctico" para `then(null,...)`
 
 ---
 
-```javascript
-//fetch devuelve una Promise
-var promesa = fetch('https://api.github.com/users/octocat')
-//then devuelve una nueva promesa "pendiente"
-//cuando la promesa original se resuelve, se llama al handler
-//y la nueva promesa pasa también a resuelta con el valor devuelto por el handler
-var promesa2 = promesa.then(function(respuesta) {
-   console.log('El servidor ha respondido!!')
-   return("OK")
-})
-//El then no tiene handler de rejected. Si "promesa" se rechaza, "promesa2" pasa a ser una "copia", tb rechazada
-promesa2.catch(function(error){
-   console.log('La petición ha fallado')
-})
-
-//Como tanto fetch como then devuelven la promesa, podemos encadenarlo,
-fetch('https://api.github.com/users/octocat')
- .then(function(respuesta) {
-   console.log('El servidor ha respondido!!')
-}).catch(function(error) {
-   console.log('La petición ha fallado')
-})
-```
-
-Aclaración: **los parámetros** de las funciones pasadas a `then` y `catch` **los está pasando la implementación de `fetch`**. Es decir, depende del API que estemos usando qué parámetros recibirán nuestras funciones
-
-Podríais ver cómo funciona esto último si creárais [vuestras propias promesas](https://davidwalsh.name/promises)
-
----
-
-Si el *handler* de `then` lanza un error, la promesa devuelta por `then` pasa a *rechazada* con valor el error lanzado
+¿Qué podemos hacer en un `then`?
 
 ```javascript
 fetch('https://api.github.com/users/octocat')
- .then(function(respuesta) {   //si se ejecuta el throw, la promesa devuelta pasa a rejected, con el valor lanzado
-    if (...)
-       throw "error!!"
- })
- .then(function(valor) {   //como no tiene handler de rejected, la promesa devuelta es una copia de la original
+   .then(function(){
 
- })
- .catch(function(valor){
-   console.log(valor)   //error!!
- })
+   })
 ```
+1. Devolver otra promesa
+2. Devolver un valor cualquiera que no sea una promesa (o ninguno)
+3. Lanzar un error con `throw`
 
 ---
 
+**1. Devolver otra promesa**
 
-## Encadenando promesas
+Es lo más común. Nos permite ir *encadenando* promesas, es decir, ir encadenando operaciones asíncronas, sin anidar los *callbacks*:
 
-El código queda mucho más limpio que con los *callbacks*, al poder encadenarlo
+```javascript
+fetch('https://api.github.com/users/octocat')
+  .then(function(respuesta){
+       //El método json() devuelve la respuesta del servidor convertida a JSON
+       //pero es asíncrono!!! (devuelve una promesa)
+       return respuesta.json()
+  }).then(function(objeto){
+       alert("El nombre real es: " + objeto.name)
+  })    
+```
+Aclaración: **los parámetros** de los *callbacks*  pasados a los `then`  **los están devolviendo `fetch()` y `json()`**. Es decir, depende del API que estemos usando qué parámetros recibirán nuestros *callbacks*
 
-Cuando en un *handler* se devuelve una promesa con `return`, el *then* pasa a su vez a devolverla.
+---
+
+El ejemplo de los *callbacks* anidados pero ahora con promesas
 
 ```javascript
 //http://jsbin.com/memohu/edit?html,js,output
@@ -388,7 +367,44 @@ document.getElementById('miBoton').addEventListener('click', function(){
 })
 ```
 
-Nótese que **si un handler de un `then` o un `catch` devuelve una promesa, el `then` o el `catch` pasan a su vez a devolverla**
+---
+
+**2. Devolver un valor que no sea una promesa (o ninguno)**
+
+Es una forma de "convertir" un valor síncrono en asíncrono
+
+```javascript
+//https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+getUserByName('nolan').then(function (user) {
+  if (inMemoryCache[user.id]) {
+    return inMemoryCache[user.id];    // returning a synchronous value!
+  }
+  return getUserAccountById(user.id); // returning a promise!
+}).then(function (userAccount) {
+  // I got a user account!
+});
+```
+
+
+---
+
+**3. Lanzar un error con `throw`**
+
+Se irá al `catch` del final de la cadena, similar a la construcción tradicional de programación secuencial
+
+```javascript
+var nombre = prompt("Dame un nombre de usuario de github")
+fetch('https://api.github.com/users/'+nombre)
+  .then(function(respuesta){
+       if (respuesta.ok())
+          return respuesta.json()
+       else throw new Error("Problema en la respuesta")
+  }).then(function(objeto){
+       alert("El nombre real es: " + objeto.name)
+  }).catch(function(error){
+       console.log(error.message)  //"Problema en la respuesta"
+  })
+```
 
 ---
 
