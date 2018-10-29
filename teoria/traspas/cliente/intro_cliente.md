@@ -470,9 +470,33 @@ document.getElementById("boton").addEventListener('click', function() {
 
 La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar el DOM directamente
 
+<<<<<<< HEAD
 - En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue,...
 - En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Por ejemplo React
+=======
+- En algunos podemos **vincular**  elementos HTML con propiedades del modelo, y se **actualizarán automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue...
+- En otros **repintamos el HTML entero** y el *framework* modifica solo las partes que cambian. Por ejemplo, React.
+
+[https://jsbin.com/qikaxef/edit?html,js,console,output](https://jsbin.com/qikaxef/edit?html,js,console,output) <!-- .element: class="caption" -->
+
+```html
+<div id="app">
+  <input type="text" v-model="mensaje"><br>
+  <h1>{{mensaje}}<h1>
+</div>    
+```
+>>>>>>> 8a1b1499666458d451ee13433523ce2f463494a2
  
+```javascript
+var app = new Vue({
+   el:'#app',
+   data: {
+     mensaje: "Bienvenido a Vue"
+   } 
+ })
+```
+
+Aclaración: en realidad, internamente React y Vue son mucho más similares de lo que parece de cara al desarrollador
 
 ---
 
