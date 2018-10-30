@@ -66,6 +66,7 @@ var p = new Persona("Pepe")
 p.saludar()
 setTimeout(p.saludar,1000) //setTimeout ejecuta un código pasados unos ms.
 ```
+[https://jsbin.com/cusuzatanu/edit?js,console](https://jsbin.com/cusuzatanu/edit?js,console)<!-- .element: class="caption"-->
 
 ---
 
