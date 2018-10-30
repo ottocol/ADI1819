@@ -14,7 +14,7 @@ En el JSON que se obtiene como respuesta:
 - Si se encuentra la localidad:
     - En el campo `weather[0].description` está el tiempo en modo texto, p.ej. "nubes" o "cielo claro".
     - En el campo `weather[0].icon` está el nombre del icono. La URL completa del icono es `http://openweathermap.org/img/w/` seguida del nombre del icono seguida de `.png`.
-- Si la localidad no existe, en el JSON habrá un campo `cod` con valor 404
+- Si la localidad no existe, el `status` de la respuesta será 404 y además en el JSON de la misma habrá un campo `cod` con valor 404
 
 Podéis modificar la siguiente plantilla HTML como queráis, añadiendo JS, HTML, modificando el HTML existente...
 
