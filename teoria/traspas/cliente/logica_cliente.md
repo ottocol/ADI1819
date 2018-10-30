@@ -372,7 +372,7 @@ document.getElementById('miBoton').addEventListener('click', function(){
 
 **2. Devolver un valor que no sea una promesa (o ninguno)**
 
-Es una forma de "convertir" un valor síncrono en asíncrono
+Es una forma de "convertir" un valor síncrono en asíncrono, ya que el then crea una nueva promesa resuelta cuyo valor es el valor devuelto.
 
 ```javascript
 //https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
