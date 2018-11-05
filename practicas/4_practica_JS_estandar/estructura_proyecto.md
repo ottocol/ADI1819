@@ -37,12 +37,71 @@ Además los *bundler* suelen ofrecer otras funcionalidades adicionales como impo
 
 Actualmente el *bundler* más difundido es [Webpack](https://webpack.js.org), pero es conocido por necesitar una configuración "complicadilla", así que en nuestro caso usaremos [Parcel](https://parceljs.org) cuya configuración es especialmente sencilla.
 
+### Un proyecto cliente de tipo "hola mundo"
+
 Lo primero es inicializar el proyecto cliente e instalar Parcel en él:
 
 ```bash
-mkdir cliente_js_estandar
-cd cliente_js_estandar
+mkdir hola_parcel
+cd hola_parcel
 npm init -y #creará un package.json con valores por defecto
-npm install parcel-bundler
+npm install parcel-bundler --save-dev
+```
+Una vez hecho esto podemos empezar a probar cómo importar módulos JS con `import` gracias a Parcel. Por ejemplo, este módulo JS
+
+```javascript
+//Archivo "saludador.js"
+var saludos = ["¡Hola!", "Yiiiha!", "¿Cómo estás?", "Buenaaaas"]
+
+function saludar() {
+    var pos = Math.floor(Math.random()*saludos.length)
+    return saludos[pos]
+}
+
+export {saludar}
 ```
 
+Lo podemos usar en nuestro código con 
+
+```javascript
+//Archivo "main.js"
+import {saludar} from './saludador.js'
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('mensaje').innerHTML = saludar()
+})
+```
+
+Y ahora creamos el `index.html` que cargue el `main.js`
+
+```html
+<html>
+<body>
+  <h1 id="mensaje"></h1>
+  <script src="./main.js"></script>
+</body>
+</html>
+```
+
+Para probarlo podemos hacer uso del servidor de desarrollo de Parcel, que está localizado en `./node_modules/.bin` (salvo que hayamos instalado Parcel con el *switch* `-g`, en cuyo caso estará en el `PATH`). 
+
+```bash
+./node_modules/.bin/parcel index.html
+```
+
+Esto abrirá un servidor web de desarrollo por el puerto 1234. Parcel incorpora *Hot Module Reloading*, lo que quiere decir (entre otras cosas) que si cambiamos cualquier módulo el efecto se verá inmediatamente sin necesidad de recargar la página.
+
+### Un proyecto cliente para empezar con vuestra práctica
+
+Para vuestra práctica necesitaréis un proyecto que incluya Parcel como herramienta de desarrollo. Se recomienda usar *handlebars* como lenguaje de plantillas (aunque podéis usar otro si lo deseáis).
+
+```bash
+#en el mismo nivel que esté el proyecto del servidor
+mkdir cliente_js_vanilla
+cd cliente_js_vanilla
+npm init -y #creará un package.json con valores por defecto
+npm i parcel-bundler --save-dev
+npm i handlebars
+```
+
+Como ejemplo para vuestro código os puede servir esta [lista de la compra en JS estándar](https://github.com/ottocol/vanillaJS-lista-compra).
