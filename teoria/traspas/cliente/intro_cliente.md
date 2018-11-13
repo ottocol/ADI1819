@@ -590,12 +590,14 @@ Truco: almacenamos el *template* en el HTML como un *script* con un tipo "invent
 <script id="miTemplate" type="text/x-handlebars-template">
  <!-- "#" y "/" definen una "seccion", que se repite el número de veces necesario,
      si el objeto es una colección. Es como un bucle -->
+<!-- {% raw %} -->     
  {{#posts}}
    <div>
      <h1>{{titulo}}</h1>
      <div>{{texto}}</div>
    </div>
  {{/posts}} 
+<!-- {% endraw %}) --> 
 </script>
 ```
 
