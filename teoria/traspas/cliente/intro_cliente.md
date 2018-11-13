@@ -470,7 +470,6 @@ document.getElementById("boton").addEventListener('click', function() {
 
 La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar el DOM directamente
 
-<<<<<<< HEAD
 - En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue,...
 - En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Por ejemplo React
 =======
@@ -597,7 +596,7 @@ Truco: almacenamos el *template* en el HTML como un *script* con un tipo "invent
      <div>{{texto}}</div>
    </div>
  {{/posts}} 
-<!-- {% endraw %}) --> 
+<!-- {% endraw %} --> 
 </script>
 ```
 
