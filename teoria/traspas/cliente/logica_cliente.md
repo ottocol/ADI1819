@@ -397,7 +397,7 @@ Se irá al `catch` del final de la cadena, similar a la construcción tradiciona
 var nombre = prompt("Dame un nombre de usuario de github")
 fetch('https://api.github.com/users/'+nombre)
   .then(function(respuesta){
-       if (respuesta.ok())
+       if (respuesta.ok)
           return respuesta.json()
        else throw new Error("Problema en la respuesta")
   }).then(function(objeto){
