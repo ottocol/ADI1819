@@ -484,7 +484,6 @@ La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar 
   <h1>{{mensaje}}<h1>
 </div>    
 ```
->>>>>>> 8a1b1499666458d451ee13433523ce2f463494a2
  
 ```javascript
 var app = new Vue({
