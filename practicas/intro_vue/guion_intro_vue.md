@@ -35,3 +35,13 @@
     + En HTML se representan como *tags* con ese nombre
 - La *app* principal será una instancia de `Vue` como hasta ahora.
 
+
+## Vue CLI
+
+```bash
+npx @vue/cli create mi-proyecto
+npm run serve
+```
+
+
+
