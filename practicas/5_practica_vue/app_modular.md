@@ -20,6 +20,7 @@ npm install -g @vue/cli
 #crear un proyecto
 vue create practica3
 cd practica3
+#Ejecutar un servidor local (similar al servidor de parcel de la práctica anterior)
 npm run serve
 ```
 
