@@ -1,6 +1,7 @@
 <!-- .slide: class="titulo" -->
 
-# Tema 6
+# Tema 3, parte II
+# Frameworks JS en el cliente
 # Gestión del estado en el cliente web
 
 ---
@@ -15,7 +16,7 @@
 
 <!-- .slide: class="titulo" -->
 
-## 6.1
+## 1
 ## Estado local vs estado centralizado
 
 ---
@@ -96,7 +97,7 @@ Por desgracia, el *event bus* rompe la idea de *flujo unidireccional*. **¿Cómo
 
 <!-- .slide: class="titulo" -->
 
-## 6.2
+## 2
 ## El patrón *Store*
 
 ---
@@ -157,7 +158,7 @@ var store = {
 
 <!-- .slide: class="titulo" -->
 
-## 6.3
+## 3
 ## Vuex
 
 
