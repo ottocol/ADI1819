@@ -16,14 +16,19 @@
 
 <!-- .slide: class="titulo" -->
 
-## 1
-## Estado local vs estado centralizado
+## 1. Estado local vs estado centralizado
 
 ---
 
+Recordemos que las aplicaciones Vue, React, Angular... están formadas de **componentes organizados jerárquicamente**
 
-- Al estar la aplicación estructurada en **componentes** una idea natural es que **cada componente almacene localmente su estado**
-- Problema: conforme crece el número de componentes las comunicaciones se hacen mucho más complicadas
+<!-- .element: class="stretch" -->![](images_estado/component_tree.png)
+
+
+---
+
+- Una idea *natural* es que **cada componente almacene localmente su estado**
+- Problema: conforme crece el número de componentes las **comunicaciones** se hacen mucho más **complicadas**
 
 ![](images_estado/flujo_informacion_componentes.png)
 
@@ -34,7 +39,7 @@ Principios de diseño importantes:
 
 >  Almacenar el **estado** en el componente de **nivel superior**
 
-Beneficio: si un componente no tiene estado podemos considerar la vista como una función pura de sus `props`.
+Beneficio: si un componente no tiene estado podemos considerar la vista como una **función pura de sus `props`**.
 
 Simplifica el *testing* y el razonamiento sobre el componente
 
@@ -86,7 +91,7 @@ EventBus.$emit('mi-evento', '¡Hola soy otro componente!');
 //Esto se haría normalmente en el método "created" del componente
 EventBus.$on('mi-evento', (datos)=>{ console.log(datos) };
 ```
-<!-- .element: class="caption" -->[Ejemplo completo](https://codesandbox.io/s/github/ottocol/prueba-eventbus-vue)
+<!-- .element: class="caption" -->[Ejemplo completo](https://codesandbox.io/s/mzjz4v55m8)
 
 ---
 
@@ -97,12 +102,13 @@ Por desgracia, el *event bus* rompe la idea de *flujo unidireccional*. **¿Cómo
 
 <!-- .slide: class="titulo" -->
 
-## 2
-## El patrón *Store*
+## 2. El patrón *Store*
 
 ---
 
 Idea: ¿por qué no sacamos el estado fuera de todos los componentes y nos lo llevamos a un "almacén centralizado"?
+
+<!-- .element: class="stretch" -->![](images_estado/data_flow1.svg)
 
 De ese modo **todos los componentes** se convertirían en funcionales
 
@@ -150,16 +156,14 @@ var store = {
 
 ---
 
-<!-- .element: class="stretch" -->
-![](images_estado/simple_store.png) 
+<!-- .element: class="stretch" --> ![](images_estado/simple_store.png) 
 
 
 ---
 
 <!-- .slide: class="titulo" -->
 
-## 3
-## Vuex
+## 3. Vuex
 
 
 ---
@@ -236,7 +240,7 @@ Vue.component('contador', {
 
 ---
 
-## Flujo unidireccional en Vue
+## Flujo unidireccional en Vuex
 
 
 <!-- .element: class="stretch" --> ![](images_estado/vuex_diagrama.png)
@@ -244,6 +248,16 @@ Vue.component('contador', {
 
 Nota: todavía no hemos visto las *actions*, son como las mutaciones pero para 
 operaciones asíncronas
+
+---
+
+## Vuex vs. Redux
+
+![](images_estado/vuex_diagrama.png) <!-- .element: class="column half" -->
+![](images_estado/redux_diagram.png) <!-- .element: class="column half" -->
+
+Nota: para complicar un poco la comparación, lo que en Vuex se llaman *mutations* en *Redux* son *actions*, pero son lo mismo.
+
 
 ---
 
@@ -330,9 +344,9 @@ Como los cambios en el estado siempre se hacen con mutaciones, si hacemos un *lo
 
 ## Acciones
 
-Así se denominan en Vue las "**mutaciones asíncronas**"
+Son **mutaciones asíncronas**
 
-Reciben como primer parámetro el `context`, que sirve para acceder al estado del *store* (`context.store`) y despachar mutaciones (con `context.commit`).
+Reciben como 1er parámetro `context`, da acceso al estado del *store* (`context.store`) y a despachar mutaciones (`context.commit`)
 
 Típicamente una acción despacha varias mutaciones, que marcan "puntos concretos" en su flujo temporal.
 
@@ -342,6 +356,7 @@ actions: {
   //Una supuesta acción para hacer checkout en una tienda
   checkout (context, productos) {
     context.commit('CHECKOUT_REQUEST')
+    //Las acciones son necesarias para op. asíncronas (p.ej. llamar a un API externo)
     shop_API.comprar(productos)
       then(function(){
         context.commit('CHECKOUT_OK')
@@ -355,9 +370,41 @@ actions: {
 
 ---
 
-# Más funcionalidades
+Ejemplo completo: [lista de la compra](https://codesandbox.io/s/7kp0qy22w1) (simplificada, sin API remoto)
+
+---
+
+## Más funcionalidades
 
 En su mayoría son "azúcar sintáctico" para hacer más sencillas ciertas operaciones, por eso no las vemos aquí en detalle, pero son útiles. Por ejemplo:
 
 - [Inyectar el *store*](https://vuex.vuejs.org/guide/state.html#getting-vuex-state-into-vue-components) automáticamente en todos los componentes (accesible con `this.$store`). Útil en aplicaciones modulares para no tener que andar importándolo siempre
 - Asociar automáticamente una llamada a un método del componente con un commit de una acción del mismo nombre ([`mapMutations`](https://vuex.vuejs.org/guide/mutations.html#committing-mutations-in-components))
+
+---
+
+## Escalando el *store*
+
+Para evitar que el *store* se convierta en un "monstruo global" se puede dividir en *módulos*, cada uno con sus propias acciones, mutaciones, etc, incluidos submódulos.
+
+```javascript
+const moduleA = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... },
+  getters: { ... }
+}
+
+const moduleB = {
+  state: { ... },
+  mutations: { ... },
+  actions: { ... }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
+  }
+})
+```
