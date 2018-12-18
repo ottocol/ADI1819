@@ -19,6 +19,7 @@ Los requisitos mínimos serán los mismos que en la práctica anterior, recordad
 
 Además de los 6 puntos de los requisitos mínimos, elegir de entre los siguientes:
 
+- hasta *1 punto* si usáis CSS propio (con alguna funcionalidad de posicionamiento CSS como *grid* o *flexbox*) o *frameworks* de componentes visuales para Vue como [vuetify](https://vuetifyjs.com/en/) o [bootstrap-vue](https://bootstrap-vue.js.org)
 - hasta *1 punto*: implementar el listado de otro recurso incluyendo también "ver detalles" y "eliminar".
 - hasta *1 punto*: edición de datos: cada elemento del listado debería tener un botón o enlace "editar" para cambiar su contenido. Al pulsarlo aparecerá un formulario para escribir los nuevos datos. Dónde y cómo aparezca (y desaparezca al acabar la edición) queda a vuestra elección.
 - hasta *2 puntos*: usar una librería para gestionar el estado de vuestra aplicación de manera centralizada. En Vue se usaría [Vuex](https://vuex.vuejs.org), en otros *frameworks* hay equivalentes, por ejemplo en React tenéis [Redux](http://es.redux.js.org).
